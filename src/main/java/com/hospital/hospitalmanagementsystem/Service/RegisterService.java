@@ -6,7 +6,9 @@ import com.hospital.hospitalmanagementsystem.Repository.DoctorRepository;
 import com.hospital.hospitalmanagementsystem.Repository.PatientRepository;
 import com.hospital.hospitalmanagementsystem.Repository.ReceptionistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class RegisterService {
@@ -20,6 +22,7 @@ public class RegisterService {
     @Autowired
     private ReceptionistRepository receptionistRepository;
 
+
     /*@Autowired
     private Admin admin;
     @Autowired
@@ -27,8 +30,7 @@ public class RegisterService {
     @Autowired
     private Patient patient;
     @Autowired
-    private Receptionist receptionist;
-*/
+    private Receptionist receptionist;*/
 
     /**
      * To register details
@@ -46,6 +48,10 @@ public class RegisterService {
         String email = registerRequest.getEmail();
         String phone = registerRequest.getPhone();
         String password = registerRequest.getPassword();
+
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(registerRequest.getPassword());
 
 
         /**
@@ -117,7 +123,7 @@ public class RegisterService {
             admin.setLastName(registerRequest.getLastName());
             admin.setPhone(registerRequest.getPhone());
             admin.setEmail(registerRequest.getEmail());
-            admin.setPassword(registerRequest.getPassword());
+            admin.setPassword(hashedPassword);
             adminRepository.save(admin);
         }
 
@@ -128,6 +134,7 @@ public class RegisterService {
             doctor.setEmail(registerRequest.getEmail());
             doctor.setGender(registerRequest.getGender());
             doctor.setDepartment(registerRequest.getDepartment());
+            doctor.setPassword(hashedPassword);
             doctorRepository.save(doctor);
         }
 
@@ -139,6 +146,7 @@ public class RegisterService {
             patient.setEmail(registerRequest.getEmail());
             patient.setDateOfBirth(registerRequest.getDateOfBirth());
             patient.setAddress(registerRequest.getAddress());
+            patient.setPassword(hashedPassword);
             patientRepository.save(patient);
         }
 
@@ -148,6 +156,7 @@ public class RegisterService {
             receptionist.setGender(registerRequest.getGender());
             receptionist.setPhone(registerRequest.getPhone());
             receptionist.setEmail(registerRequest.getEmail());
+            receptionist.setPassword(hashedPassword);
             receptionistRepository.save(receptionist);
         }
     }
