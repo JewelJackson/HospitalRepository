@@ -12,11 +12,9 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 public class Billing {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int billingId;
-
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;

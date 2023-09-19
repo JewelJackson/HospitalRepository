@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Component
 public interface ReceptionistRepository extends JpaRepository<Receptionist,Integer> {
+    Receptionist findByEmail(String email);
 }

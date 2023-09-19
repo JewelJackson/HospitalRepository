@@ -1,5 +1,4 @@
 package com.hospital.hospitalmanagementsystem.Entity;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
