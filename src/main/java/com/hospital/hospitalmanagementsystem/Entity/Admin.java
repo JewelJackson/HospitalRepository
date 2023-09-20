@@ -1,6 +1,7 @@
 package com.hospital.hospitalmanagementsystem.Entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,9 @@ public class Admin {
     private String firstName;
     private String lastName;
     private String phone;
-    @NotNull(message = "Email required")
+    //@NotNull(message = "Email required")
+    @Email
     private String email;
-    @NotBlank(message = "Password required")
+    //@NotBlank(message = "Password required")
     private String password;
 }

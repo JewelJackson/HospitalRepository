@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalTime;
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -28,7 +28,7 @@ public class Appointment {
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
     private Date appointmentDate;
-    private LocalTime appointmentTime;
+    //private LocalTime appointmentTime;
     private boolean doctorAvailabilityStatus;
     private boolean treatmentStatus;
 }

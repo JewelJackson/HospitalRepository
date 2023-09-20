@@ -56,10 +56,11 @@ public class RegisterService {
         else if (role.equalsIgnoreCase("Doctor")) {
             doctor.setFirstName(registerRequest.getFirstName());
             doctor.setLastName(registerRequest.getLastName());
-            doctor.setPhone(registerRequest.getPhone());
-            doctor.setEmail(registerRequest.getEmail());
             doctor.setGender(registerRequest.getGender());
+            doctor.setPhone(registerRequest.getPhone());
             doctor.setDepartment(registerRequest.getDepartment());
+            doctor.setDoctorStatus(registerRequest.getDoctorStatus());
+            doctor.setEmail(registerRequest.getEmail());
             doctor.setPassword(hashedPassword);
             doctorRepository.save(doctor);
         }
@@ -70,7 +71,7 @@ public class RegisterService {
             patient.setGender(registerRequest.getGender());
             patient.setPhone(registerRequest.getPhone());
             patient.setEmail(registerRequest.getEmail());
-            patient.setDateOfBirth(registerRequest.getDateOfBirth());
+            patient.setAge(registerRequest.getAge());
             patient.setAddress(registerRequest.getAddress());
             patient.setPassword(hashedPassword);
             patientRepository.save(patient);

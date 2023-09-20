@@ -14,6 +14,14 @@ public class GlobalExceptionHandling {
     public ResponseEntity<String> handleInvalidField(InvalidException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+    @ExceptionHandler(DoctorNotFoundException.class)
+    public ResponseEntity<String> handleDoctorNotFound(DoctorNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+    @ExceptionHandler(PatientNotFoundException.class)
+    public ResponseEntity<String> handleAdminNotFound(PatientNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         String errorMessage = ex.getBindingResult().getFieldError() != null

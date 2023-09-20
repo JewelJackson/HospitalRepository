@@ -29,10 +29,11 @@ public class Register {
     @NotBlank(message = "Password is required")
     private String password;
     private String department;
+    private String doctorStatus;
     private String gender;
     @Size(min = 10, max = 10, message = "Phone number must contain exactly 10 digits")
     private String phone;
-    private Date dateOfBirth;
+    private int age;
     private String address;
     @NotBlank(message = "Role cannot be empty or null")
     private String role;

@@ -28,7 +28,7 @@ public class Patient {
     @Size(min = 10, max = 10, message = "Phone number must contain exactly 10 digits")
     private String phone;
     private String email;
-    private Date dateOfBirth;
+    private int age;
     private String address;
     @NotBlank(message = "Password required")
     private String password;

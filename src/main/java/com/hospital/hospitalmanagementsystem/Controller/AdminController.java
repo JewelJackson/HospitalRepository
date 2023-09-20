@@ -1,6 +1,9 @@
 package com.hospital.hospitalmanagementsystem.Controller;
 
 import com.hospital.hospitalmanagementsystem.Entity.Admin;
+import com.hospital.hospitalmanagementsystem.Handler.PatientNotFoundException;
+import com.hospital.hospitalmanagementsystem.Handler.DoctorNotFoundException;
+import com.hospital.hospitalmanagementsystem.Response.DoctorRemoveRequest;
 import com.hospital.hospitalmanagementsystem.Response.AdminResponse;
 import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
 import com.hospital.hospitalmanagementsystem.Service.AdminService;
@@ -12,10 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/admin")
@@ -29,6 +29,7 @@ public class AdminController {
     @ApiResponse(responseCode = "400", description = "Logged in successfully"),
     @ApiResponse(responseCode = "404",description = "Login failed")})
     @PostMapping(value="/login")
+    @ResponseBody
     public AdminResponse adminLoginDetails(@Valid @RequestBody @Parameter(
             name = "adminRequest",
             description = "Admin object",
@@ -37,6 +38,19 @@ public class AdminController {
             Admin adminRequest) throws InvalidException {
         return adminService.adminLogin(adminRequest);
     }
-}
 
+    @Operation(summary = "Doctor removal by Admin",
+            description = "Doctor is removed by the admin using DoctorID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Doctor removed successfully"),
+            @ApiResponse(responseCode = "404",description = "Failed")})
+    @PostMapping(value="/remove-doctor")
+    private void removeDoctor(@Valid @RequestBody @Parameter(
+            name = "doctorRemoveRequest",
+            description = "DoctorRemoveRequest object",
+            required = true,
+            content = @Content(schema = @Schema(implementation = DoctorRemoveRequest.class))) DoctorRemoveRequest doctorRemoveRequest) throws PatientNotFoundException, DoctorNotFoundException {
+        adminService.removeDoctorByAdmin(doctorRemoveRequest);
+    }
+}
 

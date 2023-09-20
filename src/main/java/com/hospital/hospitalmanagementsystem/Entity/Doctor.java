@@ -21,11 +21,13 @@ public class Doctor {
     private int doctorId;
     private String firstName;
     private String lastName;
+    private String gender;
     private String phone;
+    private String department;
+    private String doctorStatus;
     @NotNull(message = "Email required")
     private String email;
     @NotBlank(message = "Password required")
     private String password;
-    private String gender;
-    private String department;
+
 }
