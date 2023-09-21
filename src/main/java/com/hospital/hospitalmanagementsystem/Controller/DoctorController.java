@@ -39,16 +39,10 @@ public class DoctorController {
         return doctorService.doctorLogin(doctorRequest);
     }
 
-    @Operation(summary = "Doctor available or present",
-            description = "Available doctor is fetched by checking the doctor status is present.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "400", description = "Available doctor fetched."),
-            @ApiResponse(responseCode = "404",description = "Failed")})
-    @GetMapping(value = "/available-doctors")
-    public List<AvailableDoctorRequest> doctorsAvailable(){
-        return doctorService.getAvailableDoctors();
+    @GetMapping(value = "/getalldoc")
+    private List<Doctor> getDoctors(){
+        return doctorService.getAllDoctors();
     }
 
-    /*@GetMapping(value = "/all/doctors")
-    private void*/
+
 }

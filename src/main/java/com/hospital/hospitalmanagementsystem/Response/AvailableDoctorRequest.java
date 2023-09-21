@@ -10,4 +10,5 @@ public class AvailableDoctorRequest {
     private String name;
     private String department;
 
+
 }

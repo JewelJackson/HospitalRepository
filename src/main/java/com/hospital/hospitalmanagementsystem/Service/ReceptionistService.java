@@ -8,6 +8,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReceptionistService {
 
@@ -17,6 +19,9 @@ public class ReceptionistService {
     public ReceptionistResponse receptionistLogin(Receptionist receptionistRequest) {
 
         Receptionist receptionist = receptionistRepository.findByEmail(receptionistRequest.getEmail());
+        if(receptionist==null){
+            throw new InvalidException("The User has not registered yet.");
+        }
         ReceptionistResponse receptionistResponse= new ReceptionistResponse();
 
         if (BCrypt.checkpw(receptionistRequest.getPassword(), receptionist.getPassword())) {
@@ -29,7 +34,9 @@ public class ReceptionistService {
             throw new InvalidException("Wrong password");
         }
     }
-    /*else {
-        throw new InvalidException("The User has not registered yet.");
-    }*/
+
+    public List<Receptionist> getAllReceptionist(){
+        List<Receptionist> allReceptionists = receptionistRepository.findAll();
+        return allReceptionists;
+    }
 }

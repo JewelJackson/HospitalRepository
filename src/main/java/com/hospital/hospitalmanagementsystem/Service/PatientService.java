@@ -8,6 +8,8 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PatientService {
 
@@ -17,6 +19,9 @@ public class PatientService {
     public PatientResponse patientLogin(Patient patientRequest) {
 
         Patient patient = patientRepository.findByPhone(patientRequest.getPhone());
+        if(patient==null){
+            throw new InvalidException("The User has not registered yet.");
+        }
         PatientResponse patientResponse= new PatientResponse();
 
 
@@ -31,7 +36,9 @@ public class PatientService {
             throw new InvalidException("Wrong password");
         }
     }
-    /*else {
-        throw new InvalidException("The User has not registered yet.");
-    }*/
+
+    public List<Patient> getAllPatients(){
+       List<Patient> allPatients= patientRepository.findAll();
+       return allPatients;
+    }
 }

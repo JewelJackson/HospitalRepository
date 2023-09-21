@@ -12,6 +12,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +27,9 @@ public class AdminService {
     public AdminResponse adminLogin(Admin adminRequest) {
 
         Admin admin = adminRepository.findByEmail(adminRequest.getEmail());
+        if(admin==null){
+            throw new InvalidException("The User has not registered yet.");
+        }
         AdminResponse adminResponse = new AdminResponse();
 
         if (BCrypt.checkpw(adminRequest.getPassword(), admin.getPassword())) {

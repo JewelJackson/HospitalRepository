@@ -1,5 +1,6 @@
 package com.hospital.hospitalmanagementsystem.Controller;
 
+import com.hospital.hospitalmanagementsystem.Handler.NotValidException;
 import com.hospital.hospitalmanagementsystem.Response.AppointmentRequest;
 import com.hospital.hospitalmanagementsystem.Service.AppointmentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,8 +33,8 @@ public class AppointmentController {
             name = "appointmentRequest",
             description = "AppointmentRequest object",
             required = true,
-            content = @Content(schema = @Schema(implementation = AppointmentRequest.class)))AppointmentRequest appointmentRequest) throws ParseException {
-        appointmentService.scheduleAppointment(appointmentRequest);
+            content = @Content(schema = @Schema(implementation = AppointmentRequest.class)))AppointmentRequest appointmentRequest) throws ParseException, NotValidException {
+        appointmentService.scheduleAppointmentByPatient(appointmentRequest);
         return ResponseEntity.ok("Appointment scheduled");
     }
 }

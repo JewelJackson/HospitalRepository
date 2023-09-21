@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DoctorService {
@@ -19,6 +18,11 @@ public class DoctorService {
     @Autowired
     private DoctorRepository doctorRepository;
 
+    /**
+     * Doctor Login
+     * @param doctorRequest
+     * @return
+     */
     public DoctorResponse doctorLogin(Doctor doctorRequest) {
 
         Doctor doctor = doctorRepository.findByEmail(doctorRequest.getEmail());
@@ -39,8 +43,10 @@ public class DoctorService {
 
     }
 
-
-
+    /**
+     * Available Doctor
+     * @return
+     */
     public List<AvailableDoctorRequest> getAvailableDoctors() {
         List<AvailableDoctorRequest> availableDoctorList = new ArrayList<>();
         List<Doctor> doctorList = doctorRepository.findAll();
@@ -58,8 +64,13 @@ public class DoctorService {
         return availableDoctorList;
     }
 
-    public void getAllDoctors(){
-        doctorRepository.findAll();
+    /**
+     * To get all doctors
+     * @return
+     */
+    public List<Doctor> getAllDoctors() {
+        List<Doctor> allDoctors = doctorRepository.findAll();
+        return allDoctors;
     }
 }
 

@@ -5,9 +5,7 @@ import com.hospital.hospitalmanagementsystem.Repository.AdminRepository;
 import com.hospital.hospitalmanagementsystem.Repository.DoctorRepository;
 import com.hospital.hospitalmanagementsystem.Repository.PatientRepository;
 import com.hospital.hospitalmanagementsystem.Repository.ReceptionistRepository;
-import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -39,11 +37,6 @@ public class RegisterService {
         String role = registerRequest.getRole();
         String hashedPassword = BCrypt.hashpw(registerRequest.getPassword(), BCrypt.gensalt());
 
-
-        /*BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(registerRequest.getPassword());*/
-
-
         if (role.equalsIgnoreCase("Admin")) {
             admin.setFirstName(registerRequest.getFirstName());
             admin.setLastName(registerRequest.getLastName());
@@ -52,7 +45,6 @@ public class RegisterService {
             admin.setPassword(hashedPassword);
             adminRepository.save(admin);
         }
-
         else if (role.equalsIgnoreCase("Doctor")) {
             doctor.setFirstName(registerRequest.getFirstName());
             doctor.setLastName(registerRequest.getLastName());
@@ -64,7 +56,6 @@ public class RegisterService {
             doctor.setPassword(hashedPassword);
             doctorRepository.save(doctor);
         }
-
         else if (role.equalsIgnoreCase("Patient")) {
             patient.setFirstName(registerRequest.getFirstName());
             patient.setLastName(registerRequest.getLastName());
@@ -76,7 +67,6 @@ public class RegisterService {
             patient.setPassword(hashedPassword);
             patientRepository.save(patient);
         }
-
         else if (role.equalsIgnoreCase("Receptionist")) {
             receptionist.setFirstName(registerRequest.getFirstName());
             receptionist.setLastName(registerRequest.getLastName());

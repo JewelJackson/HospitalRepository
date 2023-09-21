@@ -1,15 +1,12 @@
 package com.hospital.hospitalmanagementsystem.Service;
 
-import com.hospital.hospitalmanagementsystem.Entity.Appointment;
-import com.hospital.hospitalmanagementsystem.Entity.Doctor;
-import com.hospital.hospitalmanagementsystem.Entity.Patient;
-import com.hospital.hospitalmanagementsystem.Handler.DoctorNotFoundException;
-import com.hospital.hospitalmanagementsystem.Handler.PatientNotFoundException;
+import com.hospital.hospitalmanagementsystem.Entity.*;
+import com.hospital.hospitalmanagementsystem.Handler.*;
 import com.hospital.hospitalmanagementsystem.Repository.AppointmentRepository;
 import com.hospital.hospitalmanagementsystem.Repository.DoctorRepository;
 import com.hospital.hospitalmanagementsystem.Repository.PatientRepository;
+import com.hospital.hospitalmanagementsystem.Repository.ReceptionistRepository;
 import com.hospital.hospitalmanagementsystem.Response.AppointmentRequest;
-import com.hospital.hospitalmanagementsystem.Response.AvailableDoctorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,41 +27,49 @@ public class AppointmentService {
     @Autowired
     private PatientRepository patientRepository;
 
-    public void scheduleAppointment(AppointmentRequest appointmentRequest) throws ParseException {
+    @Autowired
+    private ReceptionistRepository receptionistRepository;
+
+    public void scheduleAppointmentByPatient(AppointmentRequest appointmentRequest) throws ParseException,NotValidException {
         List<Doctor> doctorList = doctorRepository.findByDoctorStatus("Present");
-        String doctorEmail = appointmentRequest.getDoctor().getEmail();
 
         Doctor doctorSelected = doctorList.stream()
-                .filter(doctor -> doctorEmail.equals(doctor.getEmail()))
+                .filter(doctor -> appointmentRequest.getDoctorEmail().equals(doctor.getEmail()))
                 .findFirst()
                 .orElse(null);
 
         if (doctorSelected != null) {
-            String patientEmail = appointmentRequest.getPatient().getEmail();
-            Patient patient = patientRepository.findByEmail(patientEmail);
+            Patient patient = patientRepository.findByEmail(appointmentRequest.getPatientEmail());
             if (patient == null) {
                 throw new PatientNotFoundException("Patient not found.");
             }
 
-
             Appointment appointment = new Appointment();
-            appointment.setDoctor(doctorSelected);
-            appointment.setPatient(patient);
-            appointment.setTreatmentStatus(false);
-            appointment.setDoctorAvailabilityStatus(true);
+            //List<Appointment> appointmentList = appointmentRepository.findAll();
 
-           /* appointment.setDoctor(doctorSelected.getFirstName() + " " + doctorSelected.getLastName());
-            appointment.setPatient(patient.getFirstName() + " " + patient.getLastName());*/
+            if (appointmentRepository.findAll().stream()
+                    .anyMatch(app -> app.getDoctor().getDoctorId() == doctorSelected.getDoctorId() && app.getPatient().getPatientId() == patient.getPatientId())) {
+                throw new NotValidException("The appointment has already been scheduled.");
+            }
 
-            SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
-            Date utilDate = d.parse(appointmentRequest.getAppointmentDate());
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            appointment.setAppointmentDate(sqlDate);
-
-            appointmentRepository.save(appointment);
+            appointmentRepository.save(getAppointment(appointmentRequest, doctorSelected, patient));
 
         } else {
             throw new DoctorNotFoundException("Doctor not found");
         }
     }
+    private static Appointment getAppointment(AppointmentRequest appointmentRequest, Doctor doctorSelected, Patient patient) throws ParseException {
+        Appointment appointment = new Appointment();
+        appointment.setDoctor(doctorSelected);
+        appointment.setPatient(patient);
+        appointment.setTreatmentStatus(false);
+        appointment.setDoctorAvailabilityStatus(true);
+
+        SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");
+        Date utilDate = d.parse(appointmentRequest.getAppointmentDate());
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        appointment.setAppointmentDate(sqlDate);
+        return appointment;
+    }
+
 }

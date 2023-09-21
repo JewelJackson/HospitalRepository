@@ -1,20 +1,28 @@
 package com.hospital.hospitalmanagementsystem.Response;
 
-import com.hospital.hospitalmanagementsystem.Entity.Doctor;
-import com.hospital.hospitalmanagementsystem.Entity.Patient;
+import com.hospital.hospitalmanagementsystem.Entity.Receptionist;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalTime;
-import java.util.Date;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class AppointmentRequest {
 
-    private Patient patient;
-    private Doctor doctor;
+    @NotBlank(message = "Email required")
+    @Email(message = "Invalid email address")
+    private String patientEmail;
+
+    @NotBlank(message = "Email required")
+    @Email(message = "Invalid email address")
+    private String doctorEmail;
+    private Receptionist receptionist;
     private String appointmentDate;
     private boolean doctorAvailabilityStatus;
-    private LocalTime appointmentTime;
 }
