@@ -11,6 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "Billing")
 public class Billing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +28,8 @@ public class Billing {
     @JoinColumn(name= "receptionist_id")
     private Receptionist receptionist;
     private Date billingDate;
+    private double consultationFee;
+    private double testingFee;
+    private double medicineFee;
     private double totalAmount;
 }

@@ -2,7 +2,7 @@ package com.hospital.hospitalmanagementsystem.Service;
 
 import com.hospital.hospitalmanagementsystem.Entity.Doctor;
 import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
-import com.hospital.hospitalmanagementsystem.Response.AvailableDoctorRequest;
+import com.hospital.hospitalmanagementsystem.Request.AvailableDoctorRequest;
 import com.hospital.hospitalmanagementsystem.Response.DoctorResponse;
 import com.hospital.hospitalmanagementsystem.Repository.DoctorRepository;
 import org.mindrot.jbcrypt.BCrypt;

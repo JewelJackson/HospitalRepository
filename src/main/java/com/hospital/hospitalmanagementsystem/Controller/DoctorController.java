@@ -2,7 +2,6 @@ package com.hospital.hospitalmanagementsystem.Controller;
 
 import com.hospital.hospitalmanagementsystem.Entity.Doctor;
 import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
-import com.hospital.hospitalmanagementsystem.Response.AvailableDoctorRequest;
 import com.hospital.hospitalmanagementsystem.Response.DoctorResponse;
 import com.hospital.hospitalmanagementsystem.Service.DoctorService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +38,7 @@ public class DoctorController {
         return doctorService.doctorLogin(doctorRequest);
     }
 
-    @GetMapping(value = "/getalldoc")
+    @GetMapping(value = "/get/all/doctors")
     private List<Doctor> getDoctors(){
         return doctorService.getAllDoctors();
     }

@@ -4,7 +4,7 @@ import com.hospital.hospitalmanagementsystem.Entity.Doctor;
 import com.hospital.hospitalmanagementsystem.Entity.Patient;
 import com.hospital.hospitalmanagementsystem.Entity.Receptionist;
 import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
-import com.hospital.hospitalmanagementsystem.Response.AvailableDoctorRequest;
+import com.hospital.hospitalmanagementsystem.Request.AvailableDoctorRequest;
 import com.hospital.hospitalmanagementsystem.Response.ReceptionistResponse;
 import com.hospital.hospitalmanagementsystem.Service.DoctorService;
 import com.hospital.hospitalmanagementsystem.Service.PatientService;

@@ -6,9 +6,8 @@ import com.hospital.hospitalmanagementsystem.Entity.Patient;
 import com.hospital.hospitalmanagementsystem.Entity.Receptionist;
 import com.hospital.hospitalmanagementsystem.Handler.PatientNotFoundException;
 import com.hospital.hospitalmanagementsystem.Handler.DoctorNotFoundException;
-import com.hospital.hospitalmanagementsystem.Repository.PatientRepository;
-import com.hospital.hospitalmanagementsystem.Response.AvailableDoctorRequest;
-import com.hospital.hospitalmanagementsystem.Response.DoctorRemoveRequest;
+import com.hospital.hospitalmanagementsystem.Request.AvailableDoctorRequest;
+import com.hospital.hospitalmanagementsystem.Request.DoctorRemoveRequest;
 import com.hospital.hospitalmanagementsystem.Response.AdminResponse;
 import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
 import com.hospital.hospitalmanagementsystem.Service.*;
@@ -60,7 +59,7 @@ public class AdminController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Doctor removed successfully"),
             @ApiResponse(responseCode = "404",description = "Failed")})
-    @PostMapping(value="/remove-doctor")
+    @PostMapping(value="/remove/doctor")
     public void removeDoctor(@Valid @RequestBody @Parameter(
             name = "doctorRemoveRequest",
             description = "DoctorRemoveRequest object",

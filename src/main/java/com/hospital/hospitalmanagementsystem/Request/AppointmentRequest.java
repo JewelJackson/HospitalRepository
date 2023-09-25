@@ -1,4 +1,4 @@
-package com.hospital.hospitalmanagementsystem.Response;
+package com.hospital.hospitalmanagementsystem.Request;
 
 import com.hospital.hospitalmanagementsystem.Entity.Receptionist;
 import jakarta.validation.constraints.Email;

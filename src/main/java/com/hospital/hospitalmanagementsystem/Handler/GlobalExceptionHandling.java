@@ -26,6 +26,18 @@ public class GlobalExceptionHandling {
     public ResponseEntity<String> handleAdminNotFound(PatientNotFoundException ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+    @ExceptionHandler(ReceptionistNotFoundException.class)
+    public ResponseEntity<String> handleReceptionistNotFound(ReceptionistNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+    @ExceptionHandler(AppointmentNotFound.class)
+    public ResponseEntity<String> handleAppointmentNotFound(AppointmentNotFound ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+    @ExceptionHandler(MedicineNotFound.class)
+    public ResponseEntity<String> handleMedicineNotFound(MedicineNotFound ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         String errorMessage = ex.getBindingResult().getFieldError() != null

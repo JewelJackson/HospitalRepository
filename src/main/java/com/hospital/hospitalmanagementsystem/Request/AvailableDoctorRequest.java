@@ -1,4 +1,4 @@
-package com.hospital.hospitalmanagementsystem.Response;
+package com.hospital.hospitalmanagementsystem.Request;
 
 import lombok.Getter;
 import lombok.Setter;

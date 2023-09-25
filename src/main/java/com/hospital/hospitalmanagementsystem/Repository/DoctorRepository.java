@@ -15,6 +15,7 @@ public interface DoctorRepository extends JpaRepository<Doctor,Integer> {
     Doctor findByEmail(@NotNull(message = "Email required") String email);
 
     Optional<Doctor> findByDoctorId(int doctorId);
+    //Doctor findByDocId(int doctorId);
 
     List<Doctor> findByDoctorStatus(String doctorStatus);
 }

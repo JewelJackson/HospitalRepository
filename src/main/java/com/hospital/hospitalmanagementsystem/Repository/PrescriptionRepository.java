@@ -8,4 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Component
 public interface PrescriptionRepository extends JpaRepository<Prescription,Integer> {
+
+    Prescription findByPrescriptionId(int prescription);
+
+    //Prescription findByMedicineName(String medicineName);
 }

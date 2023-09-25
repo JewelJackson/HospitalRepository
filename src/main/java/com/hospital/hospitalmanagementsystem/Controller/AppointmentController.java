@@ -1,7 +1,7 @@
 package com.hospital.hospitalmanagementsystem.Controller;
 
 import com.hospital.hospitalmanagementsystem.Handler.NotValidException;
-import com.hospital.hospitalmanagementsystem.Response.AppointmentRequest;
+import com.hospital.hospitalmanagementsystem.Request.AppointmentRequest;
 import com.hospital.hospitalmanagementsystem.Service.AppointmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

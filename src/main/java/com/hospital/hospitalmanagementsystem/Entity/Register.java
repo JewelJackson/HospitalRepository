@@ -33,9 +33,11 @@ public class Register {
     private String gender;
     @Size(min = 10, max = 10, message = "Phone number must contain exactly 10 digits")
     private String phone;
+    //@Pattern(regexp = "^[0-9]+$", message = "Age must be a non-negative integer")
     private int age;
     private String address;
     @NotBlank(message = "Role cannot be empty or null")
+    @Pattern(regexp = "^(Doctor|Admin|Receptionist|Patient)$", message = "Invalid role.")
     private String role;
 
 

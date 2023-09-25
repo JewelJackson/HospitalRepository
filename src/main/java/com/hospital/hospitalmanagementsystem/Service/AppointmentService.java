@@ -6,7 +6,7 @@ import com.hospital.hospitalmanagementsystem.Repository.AppointmentRepository;
 import com.hospital.hospitalmanagementsystem.Repository.DoctorRepository;
 import com.hospital.hospitalmanagementsystem.Repository.PatientRepository;
 import com.hospital.hospitalmanagementsystem.Repository.ReceptionistRepository;
-import com.hospital.hospitalmanagementsystem.Response.AppointmentRequest;
+import com.hospital.hospitalmanagementsystem.Request.AppointmentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +44,6 @@ public class AppointmentService {
                 throw new PatientNotFoundException("Patient not found.");
             }
 
-            Appointment appointment = new Appointment();
             //List<Appointment> appointmentList = appointmentRepository.findAll();
 
             if (appointmentRepository.findAll().stream()

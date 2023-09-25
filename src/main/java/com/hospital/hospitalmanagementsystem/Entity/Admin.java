@@ -20,10 +20,9 @@ public class Admin {
     private int adminId;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String phone;
-    //@NotNull(message = "Email required")
-    @Email
+    @Column(unique = true)
     private String email;
-    //@NotBlank(message = "Password required")
     private String password;
 }

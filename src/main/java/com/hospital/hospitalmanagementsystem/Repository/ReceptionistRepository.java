@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Component
 public interface ReceptionistRepository extends JpaRepository<Receptionist,Integer> {
     Receptionist findByEmail(String email);
+    Receptionist findByReceptionistId(int receptionistId);
 }

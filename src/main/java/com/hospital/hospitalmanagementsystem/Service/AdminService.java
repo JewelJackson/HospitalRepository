@@ -5,14 +5,13 @@ import com.hospital.hospitalmanagementsystem.Entity.Doctor;
 import com.hospital.hospitalmanagementsystem.Handler.DoctorNotFoundException;
 import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
 import com.hospital.hospitalmanagementsystem.Repository.DoctorRepository;
-import com.hospital.hospitalmanagementsystem.Response.DoctorRemoveRequest;
+import com.hospital.hospitalmanagementsystem.Request.DoctorRemoveRequest;
 import com.hospital.hospitalmanagementsystem.Response.AdminResponse;
 import com.hospital.hospitalmanagementsystem.Repository.AdminRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
