@@ -38,6 +38,10 @@ public class GlobalExceptionHandling {
     public ResponseEntity<String> handleMedicineNotFound(MedicineNotFound ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+    @ExceptionHandler(BillNotFound.class)
+    public ResponseEntity<String> handleBillNotFound(BillNotFound ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         String errorMessage = ex.getBindingResult().getFieldError() != null

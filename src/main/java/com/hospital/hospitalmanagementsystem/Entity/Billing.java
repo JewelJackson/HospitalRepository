@@ -31,5 +31,6 @@ public class Billing {
     private double consultationFee;
     private double testingFee;
     private double medicineFee;
+    private String paymentStatus;
     private double totalAmount;
 }

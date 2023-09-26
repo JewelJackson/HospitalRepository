@@ -107,5 +107,7 @@ public class AdminController {
     private List<Receptionist> getReceptionist(){
         return receptionistService.getAllReceptionist();
     }
+
+
 }
 

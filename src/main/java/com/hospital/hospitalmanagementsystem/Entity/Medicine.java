@@ -1,5 +1,6 @@
 package com.hospital.hospitalmanagementsystem.Entity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +17,6 @@ public class Medicine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int medicineId;
     private String medicineName;
+    @Size(min = 0,message = "Medicine price cannot be negative.")
     private double price;
 }

@@ -6,11 +6,18 @@ import com.hospital.hospitalmanagementsystem.Repository.DoctorRepository;
 import com.hospital.hospitalmanagementsystem.Repository.PatientRepository;
 import com.hospital.hospitalmanagementsystem.Repository.ReceptionistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.event.EventListener;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.mindrot.jbcrypt.BCrypt;
 
 
 @Service
+@PropertySource("classpath:application.properties")
 public class RegisterService {
 
     @Autowired
@@ -22,6 +29,22 @@ public class RegisterService {
     @Autowired
     private ReceptionistRepository receptionistRepository;
 
+    @Autowired
+    private JavaMailSender emailSender;
+
+    @Value("${email.username}")
+    private String emailUsername;
+
+    @Value("${email.subject}")
+    private String emailSubject;
+
+    @Value("${email.message}")
+    private String emailMessage;
+
+    private static final String ADMIN = "Admin";
+    private static final String DOCTOR = "Doctor";
+    private static final String PATIENT = "Patient";
+    private static final String RECEPTIONIST = "Receptionist";
 
     /**
      * To register the details of admin, doctor, patient and receptionist
@@ -37,7 +60,7 @@ public class RegisterService {
         String role = registerRequest.getRole();
         String hashedPassword = BCrypt.hashpw(registerRequest.getPassword(), BCrypt.gensalt());
 
-        if (role.equalsIgnoreCase("Admin")) {
+        if (role.equalsIgnoreCase(ADMIN)) {
             admin.setFirstName(registerRequest.getFirstName());
             admin.setLastName(registerRequest.getLastName());
             admin.setPhone(registerRequest.getPhone());
@@ -45,7 +68,7 @@ public class RegisterService {
             admin.setPassword(hashedPassword);
             adminRepository.save(admin);
         }
-        else if (role.equalsIgnoreCase("Doctor")) {
+        else if (role.equalsIgnoreCase(DOCTOR)) {
             doctor.setFirstName(registerRequest.getFirstName());
             doctor.setLastName(registerRequest.getLastName());
             doctor.setGender(registerRequest.getGender());
@@ -56,7 +79,7 @@ public class RegisterService {
             doctor.setPassword(hashedPassword);
             doctorRepository.save(doctor);
         }
-        else if (role.equalsIgnoreCase("Patient")) {
+        else if (role.equalsIgnoreCase(PATIENT)) {
             patient.setFirstName(registerRequest.getFirstName());
             patient.setLastName(registerRequest.getLastName());
             patient.setGender(registerRequest.getGender());
@@ -67,7 +90,7 @@ public class RegisterService {
             patient.setPassword(hashedPassword);
             patientRepository.save(patient);
         }
-        else if (role.equalsIgnoreCase("Receptionist")) {
+        else if (role.equalsIgnoreCase(RECEPTIONIST)) {
             receptionist.setFirstName(registerRequest.getFirstName());
             receptionist.setLastName(registerRequest.getLastName());
             receptionist.setGender(registerRequest.getGender());
@@ -76,5 +99,13 @@ public class RegisterService {
             receptionist.setPassword(hashedPassword);
             receptionistRepository.save(receptionist);
         }
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(emailUsername);
+        message.setTo(registerRequest.getEmail());
+        message.setSubject(emailSubject);
+        message.setText(emailMessage);
+
+        emailSender.send(message);
     }
 }

@@ -2,6 +2,7 @@ package com.hospital.hospitalmanagementsystem.Service;
 
 import com.hospital.hospitalmanagementsystem.Entity.*;
 import com.hospital.hospitalmanagementsystem.Handler.AppointmentNotFound;
+import com.hospital.hospitalmanagementsystem.Handler.BillNotFound;
 import com.hospital.hospitalmanagementsystem.Handler.NotValidException;
 import com.hospital.hospitalmanagementsystem.Handler.PrescriptionNotFound;
 import com.hospital.hospitalmanagementsystem.Repository.AppointmentRepository;
@@ -22,47 +23,42 @@ public class BillingService {
     private BillingRepository billingRepository;
 
     @Autowired
-    private AppointmentRepository appointmentRepository;
-
-    @Autowired
     private ReceptionistRepository receptionistRepository;
 
     @Autowired
     private PrescriptionRepository prescriptionRepository;
 
-    public void payment(BillingRequest billingRequest) {
+    public Double payment(BillingRequest billingRequest) {
 
-        Optional<Appointment> appointment = appointmentRepository.findByAppointmentId(billingRequest.getAppointmentId());
-        if(!appointment.isPresent()){
-            throw new AppointmentNotFound("Appointment not found for billing.");
-        }
-        Appointment app = appointment.get();
-
-        if (!(app.getDoctor().getDoctorId() == (billingRequest.getDoctorId())) && !(app.getPatient().getPatientId() == (billingRequest.getPatientId()))) {
-            throw new NotValidException("Doctor ID or Patient ID does not match the appointment for billing");
-        }
-
-        Prescription prescription = prescriptionRepository.findByPrescriptionId(billingRequest.getPrescriptionId());
-        if (prescription == null) {
+        Optional<Prescription> prescription = prescriptionRepository.findByPrescriptionId(billingRequest.getPrescriptionId());
+        if(!prescription.isPresent()){
             throw new PrescriptionNotFound("Prescription not found for billing.");
+        }
+        Prescription pres = prescription.get();
+
+        if (!(pres.getDoctor().getDoctorId() == (billingRequest.getDoctorId())) && !(pres.getPatient().getPatientId() == (billingRequest.getPatientId()))) {
+            throw new NotValidException("Doctor ID or Patient ID does not match the appointment for billing");
         }
 
         Billing billing = new Billing();
         billing.setReceptionist(receptionistRepository.findByReceptionistId(billingRequest.getReceptionistId()));
-        billing.setDoctor(app.getDoctor());
-        billing.setPatient(app.getPatient());
-        billing.setBillingDate(app.getAppointmentDate());
+        billing.setDoctor(pres.getDoctor());
+        billing.setPatient(pres.getPatient());
+        billing.setBillingDate(pres.getPrescriptionDate());
         billing.setConsultationFee(billingRequest.getConsultationFee());
         billing.setTestingFee(billingRequest.getTestingFee());
 
-        double medicineFee = calculateMedicineFee(prescription.getMedicine());
+        double medicineFee = calculateMedicineFee(pres.getMedicine());
         billing.setMedicineFee(medicineFee);
 
-        billing.setTotalAmount(billingRequest.getConsultationFee() +
+        double amt = (billingRequest.getConsultationFee() +
                 billingRequest.getTestingFee() +
                 medicineFee);
+        billing.setTotalAmount(amt);
 
+        billing.setPaymentStatus(billingRequest.getPaymentStatus());
         billingRepository.save(billing);
+        return amt;
     }
 
     private double calculateMedicineFee(List<Medicine> medicines) {
@@ -74,15 +70,3 @@ public class BillingService {
     }
 
 }
-
-
-
-
-
- /*   List<Medicine> medicines = prescriptionRepository.findByMedicineName(billingRequest.getMedicineFee());
-    double calculateMedicineFee() {
-        double medicineFee = 0.0;
-        for (Medicine medicine : medicines) {
-            medicineFee += medicine.getPrice();
-        }
-    }*/

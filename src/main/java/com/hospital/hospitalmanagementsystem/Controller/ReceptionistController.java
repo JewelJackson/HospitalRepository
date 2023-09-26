@@ -6,6 +6,7 @@ import com.hospital.hospitalmanagementsystem.Entity.Receptionist;
 import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
 import com.hospital.hospitalmanagementsystem.Request.AvailableDoctorRequest;
 import com.hospital.hospitalmanagementsystem.Response.ReceptionistResponse;
+import com.hospital.hospitalmanagementsystem.Service.BillingService;
 import com.hospital.hospitalmanagementsystem.Service.DoctorService;
 import com.hospital.hospitalmanagementsystem.Service.PatientService;
 import com.hospital.hospitalmanagementsystem.Service.ReceptionistService;
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -77,5 +79,19 @@ public class ReceptionistController {
     @GetMapping(value = "/get/all/patients")
     private List<Patient> getPatients(){
         return patientService.getAllPatients();
+    }
+
+
+    @GetMapping(value = "/see/dues")
+    public ResponseEntity<String> getBillAmount(@RequestParam("patientId") int patientId){
+        Double amount = receptionistService.seeDues(patientId);
+        return ResponseEntity.ok("Due Amount : Rs "+amount);
+    }
+
+
+    @PutMapping(value = "/due/clear")
+    public ResponseEntity<String> clearDues(@RequestParam("patientId") int patientId){
+        receptionistService.dues(patientId);
+        return ResponseEntity.ok("Dues cleared");
     }
 }

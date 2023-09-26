@@ -23,12 +23,12 @@ public class Patient {
     private int patientId;
     private String firstName;
     private String lastName;
+    private int age;
     private String gender;
     @NotNull(message = "Phone Number required")
     @Size(min = 10, max = 10, message = "Phone number must contain exactly 10 digits")
     private String phone;
     private String email;
-    private int age;
     private String address;
     @NotBlank(message = "Password required")
     private String password;
