@@ -1,6 +1,6 @@
 package com.hospital.hospitalmanagementsystem.Controller;
 
-import com.hospital.hospitalmanagementsystem.Entity.*;
+import com.hospital.hospitalmanagementsystem.Request.RegisterRequest;
 import com.hospital.hospitalmanagementsystem.Service.RegisterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -10,14 +10,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.hospital.hospitalmanagementsystem.Handler.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @Validated
@@ -33,12 +32,22 @@ public class RegisterController {
             @ApiResponse(responseCode = "400", description = "Registered successfully"),
             @ApiResponse(responseCode = "404",description = "Registration failed or validation error")})
     @PostMapping(value = "/register")
-    public ResponseEntity<String> registerDetails(@Valid @RequestBody @Parameter(name = "adminRequest",
-            description = "Admin object",
+    public ResponseEntity<String> registerDetails(@Valid @RequestBody @Parameter(name = "registerRequest",
+            description = "RegisterRequest object",
             required = true,
-            content = @Content(schema = @Schema(implementation = Register.class))) Register RequestRegister) throws InvalidException {
-
-            registerService.save(RequestRegister);
+            content = @Content(schema = @Schema(implementation = RegisterRequest.class))) RegisterRequest registerRequest) throws InvalidException {
+            registerService.save(registerRequest);
             return ResponseEntity.ok("Registered successfully");
+    }
+
+    @Operation(summary = "Upload data",
+            description = "Upload data from CSV file")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Successfully uploaded"),
+            @ApiResponse(responseCode = "404",description = "Uploading failed")})
+    @PostMapping(value = "/upload/csv")
+    public ResponseEntity<String> uploadCSV(@RequestParam("file") MultipartFile file) throws IOException {
+        registerService.extractFromCSV(file);
+        return ResponseEntity.ok("The patient details have been successfully uploaded to the database.");
     }
 }

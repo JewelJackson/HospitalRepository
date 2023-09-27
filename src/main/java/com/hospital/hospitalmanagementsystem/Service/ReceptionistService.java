@@ -28,6 +28,11 @@ public class ReceptionistService {
     @Autowired
     private PatientRepository patientRepository;
 
+    /**
+     * Receptionist Login
+     * @param receptionistRequest
+     * @return
+     */
     public ReceptionistResponse receptionistLogin(Receptionist receptionistRequest) {
 
         Receptionist receptionist = receptionistRepository.findByEmail(receptionistRequest.getEmail());
@@ -47,12 +52,20 @@ public class ReceptionistService {
         }
     }
 
+    /**
+     * To get all receptionist
+     * @return
+     */
     public List<Receptionist> getAllReceptionist(){
         List<Receptionist> allReceptionists = receptionistRepository.findAll();
         return allReceptionists;
     }
 
-
+    /**
+     * To see the dues
+     * @param patientId
+     * @return
+     */
     public Double seeDues(int patientId){
         List<Billing> billingList = billingRepository.findByPatientId(patientId);
         if (billingList.isEmpty()){
@@ -65,6 +78,10 @@ public class ReceptionistService {
         }return 0.00;
     }
 
+    /**
+     * To set the payment status as "Cleared"
+     * @param patientId
+     */
     public void dues(int patientId){
         List<Billing> billingList = billingRepository.findByPatientId(patientId);
         if (billingList == null){

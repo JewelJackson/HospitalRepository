@@ -81,16 +81,30 @@ public class ReceptionistController {
         return patientService.getAllPatients();
     }
 
-
+    @Operation(summary = "Bill Amount",
+            description = "To see the dues or amount to be paid")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Due amount displayed"),
+            @ApiResponse(responseCode = "404",description = "Failed to display the amount")})
     @GetMapping(value = "/see/dues")
-    public ResponseEntity<String> getBillAmount(@RequestParam("patientId") int patientId){
+    public ResponseEntity<String> getBillAmount(@RequestParam("patientId") @Parameter(
+            name = "patientId",
+            description = "PatientId is passed as the parameter",
+            required = true)int patientId){
         Double amount = receptionistService.seeDues(patientId);
         return ResponseEntity.ok("Due Amount : Rs "+amount);
     }
 
-
+    @Operation(summary = "Change payment status",
+            description = "To set the payment status as \"Cleared\"")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "400", description = "Payment status changed"),
+            @ApiResponse(responseCode = "404",description = "Failed to change the payment status")})
     @PutMapping(value = "/due/clear")
-    public ResponseEntity<String> clearDues(@RequestParam("patientId") int patientId){
+    public ResponseEntity<String> clearDues(@RequestParam("patientId") @Parameter(
+            name = "patientId",
+            description = "PatientId is passed as the parameter",
+            required = true) int patientId){
         receptionistService.dues(patientId);
         return ResponseEntity.ok("Dues cleared");
     }

@@ -12,6 +12,10 @@ public class MedicineService {
     @Autowired
     private MedicineRepository medicineRepository;
 
+    /**
+     * To add medicine
+     * @param medicineRequest
+     */
     public void add(MedicineRequest medicineRequest){
         Medicine medicine = new Medicine();
 

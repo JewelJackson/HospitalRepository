@@ -16,6 +16,11 @@ public class PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
+    /**
+     * Patient Login
+     * @param patientRequest
+     * @return
+     */
     public PatientResponse patientLogin(Patient patientRequest) {
 
         Patient patient = patientRepository.findByPhone(patientRequest.getPhone());
@@ -37,6 +42,10 @@ public class PatientService {
         }
     }
 
+    /**
+     * To get all patients
+     * @return
+     */
     public List<Patient> getAllPatients(){
        List<Patient> allPatients= patientRepository.findAll();
        return allPatients;

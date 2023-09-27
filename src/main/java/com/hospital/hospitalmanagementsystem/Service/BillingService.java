@@ -28,6 +28,11 @@ public class BillingService {
     @Autowired
     private PrescriptionRepository prescriptionRepository;
 
+    /**
+     * To generate bill and calculate total bill amount
+     * @param billingRequest
+     * @return
+     */
     public Double payment(BillingRequest billingRequest) {
 
         Optional<Prescription> prescription = prescriptionRepository.findByPrescriptionId(billingRequest.getPrescriptionId());
@@ -61,6 +66,11 @@ public class BillingService {
         return amt;
     }
 
+    /**
+     * To calculate medicine fee
+     * @param medicines
+     * @return
+     */
     private double calculateMedicineFee(List<Medicine> medicines) {
         double medicineFee = 0.0;
         for (Medicine medicine : medicines) {

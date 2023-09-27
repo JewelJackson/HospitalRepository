@@ -30,6 +30,12 @@ public class AppointmentService {
     @Autowired
     private ReceptionistRepository receptionistRepository;
 
+    /**
+     * To schedule Appointment
+     * @param appointmentRequest
+     * @throws ParseException
+     * @throws NotValidException
+     */
     public void scheduleAppointmentByPatient(AppointmentRequest appointmentRequest) throws ParseException,NotValidException {
         List<Doctor> doctorList = doctorRepository.findByDoctorStatus("Present");
 
@@ -57,6 +63,15 @@ public class AppointmentService {
             throw new DoctorNotFoundException("Doctor not found");
         }
     }
+
+    /**
+     * To get Appointment
+     * @param appointmentRequest
+     * @param doctorSelected
+     * @param patient
+     * @return
+     * @throws ParseException
+     */
     private static Appointment getAppointment(AppointmentRequest appointmentRequest, Doctor doctorSelected, Patient patient) throws ParseException {
         Appointment appointment = new Appointment();
         appointment.setDoctor(doctorSelected);

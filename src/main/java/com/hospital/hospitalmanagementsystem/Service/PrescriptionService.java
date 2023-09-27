@@ -9,7 +9,6 @@ import com.hospital.hospitalmanagementsystem.Request.PrescriptionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +30,10 @@ public class PrescriptionService {
     @Autowired
     private MedicineRepository medicineRepository;
 
+    /**
+     * To add prescription
+     * @param prescriptionRequest
+     */
     public void addPrescription(PrescriptionRequest prescriptionRequest) {
 
         Optional<Appointment> appointment = appointmentRepository.findByAppointmentId(prescriptionRequest.getAppointmentId());
@@ -62,29 +65,3 @@ public class PrescriptionService {
         prescriptionRepository.save(prescription);
     }
 }
-
-
-
-
-
-
-
-
-
-/* List<String> medicines = prescriptionRequest.getMedicine();
-        for (String medicine : medicines) {
-        Medicine existingMedicine = medicineRepository.findByMedicineName(medicine);
-        *//* if(!(medicine.equals(existingMedicine))){
-        throw new MedicineNotFound("This medicine is out of stock.");
-        }*//*
-        }
-
-        List<Medicine> medicineList = new ArrayList<>();
-        medicineList.add((Medicine) medicines);*/
-
-
- /*   boolean allMedicinesExist = medicines.stream()
-            .allMatch(medicine -> medicineRepository.findByMedicineId(medicine.getMedicineId()) != null);
-        if (!allMedicinesExist) {
-                throw new MedicineNotFound("One or more medicines are out of stock.");
-                }*/

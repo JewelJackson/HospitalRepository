@@ -23,6 +23,11 @@ public class AdminService {
     @Autowired
     private DoctorRepository doctorRepository;
 
+    /**
+     * Admin Login
+     * @param adminRequest
+     * @return
+     */
     public AdminResponse adminLogin(Admin adminRequest) {
 
         Admin admin = adminRepository.findByEmail(adminRequest.getEmail());
@@ -43,6 +48,10 @@ public class AdminService {
 
     }
 
+    /**
+     * To remove doctor, that is to change the doctor status to "Not Present"
+     * @param doctorRemoveRequest
+     */
     public void removeDoctorByAdmin(DoctorRemoveRequest doctorRemoveRequest) {
 
         Admin admin = adminRepository.findByEmail(doctorRemoveRequest.getAdEmail());
