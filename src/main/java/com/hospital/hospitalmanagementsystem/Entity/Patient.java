@@ -32,4 +32,7 @@ public class Patient {
     private String address;
     @NotBlank(message = "Password required")
     private String password;
+
+    public Patient(int i) {
+    }
 }

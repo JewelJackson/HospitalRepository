@@ -49,8 +49,10 @@ public class PrescriptionService {
         List<Medicine> medicineList = medicineRepository.findAll();
         if (!prescriptionRequest.getMedicine()
                 .stream()
-                .allMatch(medicineName -> medicineList.stream().anyMatch(medicine -> medicine.getMedicineName().equals(medicineName)))) {
-
+                .allMatch(medicineName -> medicineList.stream().anyMatch(medicine ->{
+                    String medicineNameFromList = medicine.getMedicineName();
+                    return medicineNameFromList != null && medicineNameFromList.equals(medicineName);
+                }))) {
             throw new MedicineNotFound("This medicine is out of stock.");
         }
 

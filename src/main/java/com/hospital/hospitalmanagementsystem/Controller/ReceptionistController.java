@@ -5,6 +5,7 @@ import com.hospital.hospitalmanagementsystem.Entity.Patient;
 import com.hospital.hospitalmanagementsystem.Entity.Receptionist;
 import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
 import com.hospital.hospitalmanagementsystem.Request.AvailableDoctorRequest;
+import com.hospital.hospitalmanagementsystem.Request.ReceptionistRequest;
 import com.hospital.hospitalmanagementsystem.Response.ReceptionistResponse;
 import com.hospital.hospitalmanagementsystem.Service.BillingService;
 import com.hospital.hospitalmanagementsystem.Service.DoctorService;
@@ -47,7 +48,7 @@ public class ReceptionistController {
             description = "Receptionist object",
             required = true,
             content = @Content(schema = @Schema(implementation = ReceptionistResponse.class)))
-                                                             Receptionist receptionistRequest) throws InvalidException {
+                                                         ReceptionistRequest receptionistRequest) throws InvalidException {
         return receptionistService.receptionistLogin(receptionistRequest);
     }
 

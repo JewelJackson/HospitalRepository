@@ -30,4 +30,6 @@ public class Doctor {
     @NotBlank(message = "Password required")
     private String password;
 
+    public Doctor(int i) {
+    }
 }

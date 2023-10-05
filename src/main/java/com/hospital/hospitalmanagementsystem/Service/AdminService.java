@@ -5,6 +5,7 @@ import com.hospital.hospitalmanagementsystem.Entity.Doctor;
 import com.hospital.hospitalmanagementsystem.Handler.DoctorNotFoundException;
 import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
 import com.hospital.hospitalmanagementsystem.Repository.DoctorRepository;
+import com.hospital.hospitalmanagementsystem.Request.AdminRequest;
 import com.hospital.hospitalmanagementsystem.Request.DoctorRemoveRequest;
 import com.hospital.hospitalmanagementsystem.Response.AdminResponse;
 import com.hospital.hospitalmanagementsystem.Repository.AdminRepository;
@@ -28,7 +29,7 @@ public class AdminService {
      * @param adminRequest
      * @return
      */
-    public AdminResponse adminLogin(Admin adminRequest) {
+    public AdminResponse adminLogin(AdminRequest adminRequest) {
 
         Admin admin = adminRepository.findByEmail(adminRequest.getEmail());
         if(admin==null){
@@ -40,6 +41,7 @@ public class AdminService {
 
             adminResponse.setAdminId(admin.getAdminId());
             adminResponse.setName(admin.getFirstName() + " " + admin.getLastName());
+            adminResponse.setEmail(admin.getEmail());
             return adminResponse;
         }
         else {

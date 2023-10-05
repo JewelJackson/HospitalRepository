@@ -8,10 +8,7 @@ import com.hospital.hospitalmanagementsystem.Repository.ReceptionistRepository;
 import com.hospital.hospitalmanagementsystem.Request.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-/*import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.event.EventListener;
-import org.springframework.mail.SimpleMailMessage;*/
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.mindrot.jbcrypt.BCrypt;
@@ -27,7 +24,6 @@ import java.io.InputStreamReader;
 
 
 @Service
-//@PropertySource("classpath:application.properties")
 public class RegisterService {
 
     @Autowired
@@ -60,7 +56,7 @@ public class RegisterService {
      * To register the details of admin, doctor, patient and receptionist
      * @param registerRequest
      */
-    public void save(RegisterRequest registerRequest) {
+    public void register(RegisterRequest registerRequest) {
 
         Admin admin = new Admin();
         Doctor doctor = new Doctor();
@@ -110,13 +106,13 @@ public class RegisterService {
             receptionistRepository.save(receptionist);
         }
 
-        /*SimpleMailMessage message = new SimpleMailMessage();
+        SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(emailUsername);
         message.setTo(registerRequest.getEmail());
         message.setSubject(emailSubject);
         message.setText(emailMessage);
 
-        emailSender.send(message);*/
+        emailSender.send(message);
     }
 
     /**

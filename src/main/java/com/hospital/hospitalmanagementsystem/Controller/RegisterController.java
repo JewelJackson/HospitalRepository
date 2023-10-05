@@ -36,7 +36,7 @@ public class RegisterController {
             description = "RegisterRequest object",
             required = true,
             content = @Content(schema = @Schema(implementation = RegisterRequest.class))) RegisterRequest registerRequest) throws InvalidException {
-            registerService.save(registerRequest);
+            registerService.register(registerRequest);
             return ResponseEntity.ok("Registered successfully");
     }
 

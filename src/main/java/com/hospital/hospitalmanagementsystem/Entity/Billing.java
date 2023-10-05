@@ -33,4 +33,7 @@ public class Billing {
     private double medicineFee;
     private String paymentStatus;
     private double totalAmount;
+
+    public Billing(int i) {
+    }
 }

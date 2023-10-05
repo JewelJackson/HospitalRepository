@@ -8,4 +8,5 @@ import lombok.Setter;
 public class ReceptionistResponse {
     private int receptionistId;
     private String name;
+    private String email;
 }

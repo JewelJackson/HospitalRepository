@@ -2,6 +2,8 @@ package com.hospital.hospitalmanagementsystem.Controller;
 
 import com.hospital.hospitalmanagementsystem.Entity.Patient;
 import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
+import com.hospital.hospitalmanagementsystem.Repository.PatientRepository;
+import com.hospital.hospitalmanagementsystem.Request.PatientRequest;
 import com.hospital.hospitalmanagementsystem.Response.PatientResponse;
 import com.hospital.hospitalmanagementsystem.Service.PatientService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,7 +37,7 @@ public class PatientController {
             description = "Patient object",
             required = true,
             content = @Content(schema = @Schema(implementation = PatientResponse.class)))
-                                                   Patient patientRequest)throws InvalidException {
+                                               PatientRequest patientRequest)throws InvalidException {
         return patientService.patientLogin(patientRequest);
     }
 }

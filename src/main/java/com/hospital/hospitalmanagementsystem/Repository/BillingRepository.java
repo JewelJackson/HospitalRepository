@@ -18,4 +18,5 @@ public interface BillingRepository extends JpaRepository<Billing,Integer> {
     @Query("SELECT SUM(b.totalAmount) FROM Billing b WHERE b.patient.id = :patientId")
     Double getTotalAmountByPatientId(@Param("patientId") int patientId);
     //Double getTotalAmountByPatientId(int patientId);
+
 }

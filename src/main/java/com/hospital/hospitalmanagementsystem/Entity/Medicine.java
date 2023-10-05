@@ -19,4 +19,8 @@ public class Medicine {
     private String medicineName;
     @Size(min = 0,message = "Medicine price cannot be negative.")
     private double price;
+
+
+    public Medicine(String medicine2, double v) {
+    }
 }

@@ -6,6 +6,7 @@ import com.hospital.hospitalmanagementsystem.Entity.Patient;
 import com.hospital.hospitalmanagementsystem.Entity.Receptionist;
 import com.hospital.hospitalmanagementsystem.Handler.PatientNotFoundException;
 import com.hospital.hospitalmanagementsystem.Handler.DoctorNotFoundException;
+import com.hospital.hospitalmanagementsystem.Request.AdminRequest;
 import com.hospital.hospitalmanagementsystem.Request.AvailableDoctorRequest;
 import com.hospital.hospitalmanagementsystem.Request.DoctorRemoveRequest;
 import com.hospital.hospitalmanagementsystem.Response.AdminResponse;
@@ -50,7 +51,7 @@ public class AdminController {
             description = "Admin object",
             required = true,
             content = @Content(schema = @Schema(implementation = AdminResponse.class)))
-            Admin adminRequest) throws InvalidException {
+                                           AdminRequest adminRequest) throws InvalidException {
         return adminService.adminLogin(adminRequest);
     }
 

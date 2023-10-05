@@ -8,6 +8,7 @@ import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
 import com.hospital.hospitalmanagementsystem.Handler.PatientNotFoundException;
 import com.hospital.hospitalmanagementsystem.Repository.BillingRepository;
 import com.hospital.hospitalmanagementsystem.Repository.PatientRepository;
+import com.hospital.hospitalmanagementsystem.Request.ReceptionistRequest;
 import com.hospital.hospitalmanagementsystem.Response.ReceptionistResponse;
 import com.hospital.hospitalmanagementsystem.Repository.ReceptionistRepository;
 import org.mindrot.jbcrypt.BCrypt;
@@ -33,7 +34,7 @@ public class ReceptionistService {
      * @param receptionistRequest
      * @return
      */
-    public ReceptionistResponse receptionistLogin(Receptionist receptionistRequest) {
+    public ReceptionistResponse receptionistLogin(ReceptionistRequest receptionistRequest) {
 
         Receptionist receptionist = receptionistRepository.findByEmail(receptionistRequest.getEmail());
         if(receptionist==null){
@@ -45,6 +46,7 @@ public class ReceptionistService {
 
             receptionistResponse.setReceptionistId(receptionist.getReceptionistId());
             receptionistResponse.setName(receptionist.getFirstName() +" "+receptionist.getLastName());
+            receptionistResponse.setEmail(receptionist.getEmail());
             return receptionistResponse;
         }
         else {
@@ -72,7 +74,7 @@ public class ReceptionistService {
             throw new BillNotFound("No such bill exist");
         }
         for (Billing bill : billingList){
-            if (bill.getPaymentStatus().equals("The bill is due.")){
+            if (bill.getPaymentStatus().equalsIgnoreCase("The bill is due.")){
                 return billingRepository.getTotalAmountByPatientId(patientId);
             }
         }return 0.00;
@@ -84,11 +86,11 @@ public class ReceptionistService {
      */
     public void dues(int patientId){
         List<Billing> billingList = billingRepository.findByPatientId(patientId);
-        if (billingList == null){
+        if (billingList.isEmpty()){
             throw new BillNotFound("No such bill exist");
         }
         for (Billing bill : billingList){
-            if (bill.getPaymentStatus().equals("The bill is due.")){
+            if (bill.getPaymentStatus().equalsIgnoreCase("The bill is due.")){
                 bill.setPaymentStatus("Cleared");
                 billingRepository.save(bill);
             }

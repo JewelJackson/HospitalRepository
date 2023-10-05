@@ -23,7 +23,7 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
-    @NotNull
+    //@NotNull
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;

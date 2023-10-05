@@ -2,6 +2,7 @@ package com.hospital.hospitalmanagementsystem.Service;
 
 import com.hospital.hospitalmanagementsystem.Entity.Patient;
 import com.hospital.hospitalmanagementsystem.Handler.InvalidException;
+import com.hospital.hospitalmanagementsystem.Request.PatientRequest;
 import com.hospital.hospitalmanagementsystem.Response.PatientResponse;
 import com.hospital.hospitalmanagementsystem.Repository.PatientRepository;
 import org.mindrot.jbcrypt.BCrypt;
@@ -21,7 +22,7 @@ public class PatientService {
      * @param patientRequest
      * @return
      */
-    public PatientResponse patientLogin(Patient patientRequest) {
+    public PatientResponse patientLogin(PatientRequest patientRequest) {
 
         Patient patient = patientRepository.findByPhone(patientRequest.getPhone());
         if(patient==null){

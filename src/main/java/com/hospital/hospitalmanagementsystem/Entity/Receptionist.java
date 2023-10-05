@@ -27,4 +27,7 @@ public class Receptionist {
     private String email;
     @NotNull(message = "Password required")
     private String password;
+
+    public Receptionist(int i) {
+    }
 }

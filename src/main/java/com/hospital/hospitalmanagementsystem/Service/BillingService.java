@@ -42,7 +42,7 @@ public class BillingService {
         Prescription pres = prescription.get();
 
         if (!(pres.getDoctor().getDoctorId() == (billingRequest.getDoctorId())) && !(pres.getPatient().getPatientId() == (billingRequest.getPatientId()))) {
-            throw new NotValidException("Doctor ID or Patient ID does not match the appointment for billing");
+            throw new NotValidException("Doctor ID or Patient ID does not match the prescription for billing");
         }
 
         Billing billing = new Billing();
@@ -71,7 +71,7 @@ public class BillingService {
      * @param medicines
      * @return
      */
-    private double calculateMedicineFee(List<Medicine> medicines) {
+    public double calculateMedicineFee(List<Medicine> medicines) {
         double medicineFee = 0.0;
         for (Medicine medicine : medicines) {
             medicineFee += medicine.getPrice();
