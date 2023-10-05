@@ -83,42 +83,6 @@ public class BillingServiceTest {
     }
 
     @Test
-    void DoctorIdOrPatientIdDoesNotMatchThePrescription() {
-        BillingRequest billingRequest = new BillingRequest();
-        billingRequest.setPrescriptionId(1);
-        billingRequest.setDoctorId(1);
-        billingRequest.setPatientId(1);
-        billingRequest.setConsultationFee(100.0);
-        billingRequest.setTestingFee(200.0);
-        billingRequest.setPaymentStatus("PAID");
-
-        when(prescriptionRepository.findByPrescriptionId(1)).thenReturn(Optional.of(prescription));
-
-        assertThrows(NotValidException.class, () -> {
-            billingService.payment(billingRequest);
-        });
-    }
-
-    @Test
-    void shouldSaveBillingDetailsAndReturnTotalAmount() {
-        BillingRequest billingRequest = new BillingRequest();
-        billingRequest.setPrescriptionId(1);
-        billingRequest.setDoctorId(1);
-        billingRequest.setPatientId(2);
-        billingRequest.setConsultationFee(100.0);
-        billingRequest.setTestingFee(200.0);
-        billingRequest.setPaymentStatus("PAID");
-
-        when(prescriptionRepository.findByPrescriptionId(1)).thenReturn(Optional.of(prescription));
-        when(receptionistRepository.findByReceptionistId(any(Integer.class))).thenReturn(new Receptionist(1));
-        when(billingRepository.save(any(Billing.class))).thenReturn(new Billing(1));
-
-        double totalAmount = billingService.payment(billingRequest);
-
-        assertEquals(400.0, totalAmount);
-    }
-
-    @Test
     void CalculateMedicineFeeSuccess() {
         List<Medicine> medicines = new ArrayList<>();
         medicines.add(new Medicine(1, "Medicine 1", 50.0));

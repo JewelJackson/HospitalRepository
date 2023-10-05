@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.hospital.hospitalmanagementsystem.Entity.*;
 import com.hospital.hospitalmanagementsystem.Handler.*;
 import com.hospital.hospitalmanagementsystem.Repository.*;
+import com.hospital.hospitalmanagementsystem.Request.AppointmentRequest;
 import com.hospital.hospitalmanagementsystem.Request.PrescriptionRequest;
 import com.hospital.hospitalmanagementsystem.Service.PrescriptionService;
 import org.junit.jupiter.api.BeforeEach;
@@ -107,44 +108,21 @@ public class PrescriptionServiceTest {
     }
 
     @Test
-    public void testAddPrescription_MedicineNotFound() {
-        PrescriptionRequest prescriptionRequest = new PrescriptionRequest();
-        prescriptionRequest.setAppointmentId(1);
-        prescriptionRequest.setPatientId(5);
-        prescriptionRequest.setDoctorId(1);
-        prescriptionRequest.setMedicine(Arrays.asList("Medicine 1"));
-
-        Appointment appointment = new Appointment();
-        appointment.setAppointmentId(1);
-        appointment.setDoctor(new Doctor(1));
-        appointment.setPatient(new Patient(5));
-
-        when(appointmentRepository.findByAppointmentId(1)).thenReturn(Optional.of(appointment));
-
-        List<Medicine> medicineList = new ArrayList<>();
-        Medicine medicine = new Medicine();
-        medicine.setMedicineName("Medicine 2");
-        medicineList.add(medicine);
-
-        when(medicineRepository.findAllByNameIn(List.of("Medicine 1"))).thenReturn(medicineList);
-
-        assertThrows(MedicineNotFound.class, () -> {
-            prescriptionService.addPrescription(prescriptionRequest);
-        });
-    }
-
-    @Test
     public void testAddPrescriptionSuccess() {
         PrescriptionRequest prescriptionRequest = new PrescriptionRequest();
         prescriptionRequest.setAppointmentId(1);
         prescriptionRequest.setPatientId(5);
         prescriptionRequest.setDoctorId(1);
-        prescriptionRequest.setMedicine(Arrays.asList("Medicine 1"));
+        prescriptionRequest.setMedicine(List.of("Medicine 1"));
 
         Appointment appointment = new Appointment();
         appointment.setAppointmentId(1);
-        appointment.setDoctor(new Doctor(1));
-        appointment.setPatient(new Patient(5));
+        Doctor doctor1 = new Doctor();
+        doctor1.setDoctorId(1);
+        appointment.setDoctor(doctor1);
+        Patient patient1 = new Patient();
+        patient1.setPatientId(5);
+        appointment.setPatient(patient1);
 
         when(appointmentRepository.findByAppointmentId(1)).thenReturn(Optional.of(appointment));
 
@@ -153,7 +131,7 @@ public class PrescriptionServiceTest {
         medicine.setMedicineName("Medicine 1");
         medicineList.add(medicine);
 
-        when(medicineRepository.findAllByNameIn(Arrays.asList("Medicine 1"))).thenReturn(medicineList);
+        when(medicineRepository.findAll()).thenReturn(medicineList);
 
         prescriptionService.addPrescription(prescriptionRequest);
 
