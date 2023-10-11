@@ -33,7 +33,6 @@ public class PatientServiceTest {
 
     @BeforeEach
     public void setUp() {
-        // You can initialize any common setup here if needed.
         patient = new Patient();
         patient.setEmail("patient@example.com");
         patient.setFirstName("Gokul");
@@ -43,66 +42,43 @@ public class PatientServiceTest {
 
     @Test
     public void testPatientLoginSuccess() {
-        // Create a PatientRequest
         PatientRequest patientRequest = new PatientRequest();
         patientRequest.setPhone("8975369433");
-        patientRequest.setPassword("password"); // Password should be hashed, but for testing, we use plain text here
+        patientRequest.setPassword("password");
 
-        // Create a mocked Patient object
-      /*  Patient patient = new Patient();
-        patient.setEmail("patient@example.com");
-        patient.setFirstName("Gokul");
-        patient.setLastName("Nair");
-        patient.setPassword(BCrypt.hashpw("password", BCrypt.gensalt()));*/// Hashed password
-
-        // Mock the behavior of the patientRepository.findByEmail method
         when(patientRepository.findByPhone("8975369433")).thenReturn(patient);
 
-        // Call the service method
         PatientResponse patientResponse = assertDoesNotThrow(() -> patientService.patientLogin(patientRequest));
 
-        // Verify that the response contains the correct patient information
         assertEquals("Gokul Nair", patientResponse.getName());
         assertEquals("patient@example.com", patientResponse.getEmail());
     }
 
     @Test
     public void testPatientLoginInvalid() {
-        // Create a PatientRequest
+
         PatientRequest patientRequest = new PatientRequest();
         patientRequest.setPhone("8975369433");
         patientRequest.setPassword("Wrong Password"); // Wrong password
 
-        // Create a mocked Patient object with the correct email but a different password
-        Patient patient = new Patient();
-        patient.setEmail("patient@example.com");
-        patient.setPassword(BCrypt.hashpw("Password Correct", BCrypt.gensalt())); // Hashed password
-
-        // Mock the behavior of the patientRepository.findByEmail method
         when(patientRepository.findByPhone("8975369433")).thenReturn(patient);
 
-        // Call the service method and expect a ValidationException with "Wrong password"
         assertThrows(InvalidException.class, () -> patientService.patientLogin(patientRequest));
     }
 
     @Test
     public void testPatientNotRegistered() {
-        // Create a PatientRequest with an email for a non-existent patient
         PatientRequest patientRequest = new PatientRequest();
-        patientRequest.setPhone("8975369433");
+        patientRequest.setPhone("1234567890");
         patientRequest.setPassword("password");
 
-        // Mock the behavior of the patientRepository.findByEmail method to return null
-        when(patientRepository.findByPhone("8975369433")).thenReturn(null);
+        when(patientRepository.findByPhone("1234567890")).thenReturn(null);
 
-        // Call the service method and expect a ValidationException with "Patient not registered"
         assertThrows(InvalidException.class, () -> patientService.patientLogin(patientRequest));
     }
 
     @Test
     public void testGetAllPatients() {
-        Patient patient = new Patient();
-        patient.setEmail("patient@example.com");
         List<Patient> patientList = new ArrayList<>();
         patientList.add(patient);
 

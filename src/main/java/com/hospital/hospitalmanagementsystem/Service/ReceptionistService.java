@@ -84,7 +84,7 @@ public class ReceptionistService {
      * To set the payment status as "Cleared"
      * @param patientId
      */
-    public void dues(int patientId){
+    public void clearDues(int patientId){
         List<Billing> billingList = billingRepository.findByPatientId(patientId);
         if (billingList.isEmpty()){
             throw new BillNotFound("No such bill exist");

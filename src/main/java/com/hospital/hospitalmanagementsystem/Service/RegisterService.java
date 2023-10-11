@@ -110,7 +110,7 @@ public class RegisterService {
         message.setFrom(emailUsername);
         message.setTo(registerRequest.getEmail());
         message.setSubject(emailSubject);
-        message.setText(emailMessage);
+        message.setText("Hello"+" " +registerRequest.getFirstName()+" "+registerRequest.getLastName()+","+"\n" +emailMessage);
 
         emailSender.send(message);
     }

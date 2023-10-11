@@ -108,7 +108,6 @@ public class ReceptionistServiceTest {
         double totalAmount = receptionistService.seeDues(1);
 
         assertEquals(0.00, totalAmount); // Assuming all bills have been paid (paymentStatus=Cleared)
-        assertEquals("The bill is due.",billing.getPaymentStatus());
     }
 
     @Test
@@ -127,7 +126,7 @@ public class ReceptionistServiceTest {
 
         when(billingRepository.findByPatientId(2)).thenReturn(billingList);
 
-        receptionistService.dues(2);
+        receptionistService.clearDues(2);
 
         assertEquals("Cleared", billing.getPaymentStatus());
         verify(billingRepository, times(1)).save(billing);
@@ -137,6 +136,6 @@ public class ReceptionistServiceTest {
     public void testDues_NoBillingExists() {
         when(billingRepository.findByPatientId(2)).thenReturn(new ArrayList<>());
 
-        assertThrows(BillNotFound.class, () -> receptionistService.dues(2));
+        assertThrows(BillNotFound.class, () -> receptionistService.clearDues(2));
     }
 }

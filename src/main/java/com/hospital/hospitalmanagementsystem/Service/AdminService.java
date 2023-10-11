@@ -33,7 +33,7 @@ public class AdminService {
 
         Admin admin = adminRepository.findByEmail(adminRequest.getEmail());
         if(admin==null){
-            throw new InvalidException("The User has not registered yet.");
+            throw new InvalidException("Invalid Email ID or the User has not registered yet.");
         }
         AdminResponse adminResponse = new AdminResponse();
 
@@ -59,7 +59,7 @@ public class AdminService {
         Admin admin = adminRepository.findByEmail(doctorRemoveRequest.getAdEmail());
 
         Optional<Doctor> doctorOptional = doctorRepository.findByDoctorId(doctorRemoveRequest.getDoctorID());
-        if (!doctorOptional.isPresent()) {
+        if (doctorOptional.isEmpty()) {
             throw new DoctorNotFoundException("Doctor not found");
         }
 

@@ -60,7 +60,7 @@ public class AdminController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Doctor removed successfully"),
             @ApiResponse(responseCode = "404",description = "Failed")})
-    @PostMapping(value="/remove/doctor")
+    @PutMapping(value="/remove/doctor")
     public void removeDoctor(@Valid @RequestBody @Parameter(
             name = "doctorRemoveRequest",
             description = "DoctorRemoveRequest object",
@@ -74,7 +74,7 @@ public class AdminController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Available doctor fetched."),
             @ApiResponse(responseCode = "404",description = "Failed")})
-    @GetMapping(value = "/available-doctors")
+    @GetMapping(value = "get/all/available/doctors")
     public List<AvailableDoctorRequest> doctorsAvailable(){
         return doctorService.getAvailableDoctors();
     }

@@ -16,11 +16,12 @@ public class Medicine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int medicineId;
+    @Column(unique = true)
     private String medicineName;
-    @Size(min = 0,message = "Medicine price cannot be negative.")
+    //@Size(min = 0,message = "Medicine price cannot be negative.")
     private double price;
 
 
-    public Medicine(String medicine2, double v) {
+    public Medicine(String medicine2, double m) {
     }
 }

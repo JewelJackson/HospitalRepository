@@ -59,12 +59,9 @@ public class RegisterServiceTest {
         // Create a RegisterRequest object for an admin
         RegisterRequest registerRequest = new RegisterRequest();
         registerRequest.setRole("admin");
-        // Set other properties for the registerRequest
 
-        // Mock the behavior of adminRepository.save()
         when(adminRepository.save(any(Admin.class))).thenReturn(new Admin()); // Return a new Admin object
 
-        // Call the method to be tested
         registerService.register(registerRequest);
 
         // Verify that adminRepository.save() was called with the expected Admin object
@@ -111,7 +108,7 @@ public class RegisterServiceTest {
         byte[] csvBytes = "firstName,lastName,age,gender,phone,email,address\nSachin,Tendulkar,45,Male,1234567890,sachin@example.com,HB123".getBytes();
         MockMultipartFile mockFile = new MockMultipartFile("file", "patients.csv", "text/csv", csvBytes);
 
-        // Mock the InputStream and CSVParser
+        // Mock the InputStream
         try (InputStream inputStream = mockFile.getInputStream();
              InputStreamReader reader = new InputStreamReader(inputStream);
              CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withHeader())) {
@@ -122,13 +119,10 @@ public class RegisterServiceTest {
                 csvRecords.add(record);
             }
 
-            // Define the behavior for patientRepository.save()
             when(patientRepository.save(any(Patient.class))).thenReturn(new Patient());
 
-            // Call the extractFromCSV method
             registerService.extractFromCSV(mockFile);
 
-            // Verify that patientRepository.save() is called for each record
             verify(patientRepository, times(csvRecords.size())).save(any(Patient.class));
         }
     }

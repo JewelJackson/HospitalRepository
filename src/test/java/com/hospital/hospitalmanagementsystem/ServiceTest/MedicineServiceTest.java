@@ -25,27 +25,23 @@ public class MedicineServiceTest {
 
     @BeforeEach
     public void setUp() {
-        // You can initialize any common setup here if needed.
+
     }
 
     @Test
     public void testAddMedicineSuccess() {
-        // Create a MedicineRequest
         MedicineRequest medicineRequest = new MedicineRequest();
         medicineRequest.setMedicineName("Medicine A");
         medicineRequest.setPrice(10.0);
 
-        // Mock the behavior of the medicineRepository.save method
         when(medicineRepository.save(any(Medicine.class))).thenAnswer(invocation -> {
             Medicine savedMedicine = invocation.getArgument(0);
-            savedMedicine.setMedicineId(1); // Simulate that the medicine got saved with an ID
+            savedMedicine.setMedicineId(1);
             return savedMedicine;
         });
 
-        // Call the service method
         assertDoesNotThrow(() -> medicineService.add(medicineRequest));
 
-        // Verify that save was called with the correct Medicine object
         verify(medicineRepository, times(1)).save(any(Medicine.class));
     }
 }

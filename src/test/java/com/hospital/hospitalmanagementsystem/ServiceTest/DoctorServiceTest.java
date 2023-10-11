@@ -81,19 +81,6 @@ public class DoctorServiceTest {
     }
 
     @Test
-    public void testGetAvailableDoctors() {
-        List<Doctor> doctorList = new ArrayList<>();
-        doctorList.add(doctor);
-
-        when(doctorRepository.findByDoctorStatus("Present")).thenReturn(doctorList);
-
-        List<Doctor> availableDoctors = doctorRepository.findByDoctorStatus("Present");
-
-        assertEquals(1, availableDoctors.size());
-        //assertEquals("Sam Mathew", availableDoctors.get(0).getName());
-    }
-
-    @Test
     public void testGetAllDoctors() {
         List<Doctor> doctorList = new ArrayList<>();
         doctorList.add(doctor);

@@ -17,19 +17,19 @@ public class CovidController {
 
     @GetMapping("/data/{loc}")
     @ResponseBody
-    public Mono<CovidDataResponse.Data.RegionalData> getCovidDataByLocation(@PathVariable String loc) {
-        return covidService.fetchCovidDataByLocation(loc);
-    }
-
-    @GetMapping("/hospital/bed/{state}")
-    @ResponseBody
-    public Mono<CovidHospitalBedResponse.Data.Regional> getBedDetailsByState(@PathVariable String state) {
-        return covidService.fetchCovidBedDataByState(state);
+    public Mono<CovidDataResponse.Data.RegionalData> getCovidDataByLocation(@PathVariable("loc") String loc) {
+        return covidService.getCovidDataByLocation(loc);
     }
 
     @GetMapping("/contact/{loc}")
     @ResponseBody
-    public Mono<CovidContactResponse.Data.Contacts.Regional> getHelplineNumber(@PathVariable String loc) {
-        return covidService.fetchCovidContactHelpline(loc);
+    public Mono<CovidContactResponse.Data.Contacts.Regional> getHelplineNumber(@PathVariable("loc") String loc) {
+        return covidService.getCovidContactHelpline(loc);
+    }
+
+    @GetMapping("/hospital/bed/{state}")
+    @ResponseBody
+    public Mono<CovidHospitalBedResponse.Data.Regional> getBedDetailsByState(@PathVariable("state") String state) {
+        return covidService.getCovidBedDataByState(state);
     }
 }

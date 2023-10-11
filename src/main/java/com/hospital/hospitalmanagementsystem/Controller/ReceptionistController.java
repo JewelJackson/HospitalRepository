@@ -52,22 +52,12 @@ public class ReceptionistController {
         return receptionistService.receptionistLogin(receptionistRequest);
     }
 
-    @Operation(summary = "List of all doctor",
-            description = "Receptionist can get the list of all doctors in the hospital")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "400", description = "All doctors fetched."),
-            @ApiResponse(responseCode = "404",description = "Failed")})
-    @GetMapping(value = "/get/all/doctors")
-    private List<Doctor> getDoctors(){
-        return doctorService.getAllDoctors();
-    }
-
     @Operation(summary = "Doctor available or present",
             description = "Available doctor is fetched by checking the doctor status is present.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "400", description = "Available doctor fetched."),
             @ApiResponse(responseCode = "404",description = "Failed")})
-    @GetMapping(value = "/available-doctors")
+    @GetMapping(value = "get/all/available/doctors")
     public List<AvailableDoctorRequest> doctorsAvailable(){
         return doctorService.getAvailableDoctors();
     }
@@ -106,7 +96,7 @@ public class ReceptionistController {
             name = "patientId",
             description = "PatientId is passed as the parameter",
             required = true) int patientId){
-        receptionistService.dues(patientId);
+        receptionistService.clearDues(patientId);
         return ResponseEntity.ok("Dues cleared");
     }
 }

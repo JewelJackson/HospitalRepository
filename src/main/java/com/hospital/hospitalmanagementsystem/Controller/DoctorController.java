@@ -39,15 +39,4 @@ public class DoctorController {
         return doctorService.doctorLogin(doctorRequest);
     }
 
-    @Operation(summary = "All doctors",
-            description = "To get all doctors")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "400", description = "All doctors fetched successfully"),
-            @ApiResponse(responseCode = "404",description = "Failed to fetch all doctors")})
-    @GetMapping(value = "/get/all/doctors")
-    private List<Doctor> getDoctors(){
-        return doctorService.getAllDoctors();
-    }
-
-
 }

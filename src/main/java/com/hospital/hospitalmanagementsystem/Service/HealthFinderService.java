@@ -11,11 +11,11 @@ import reactor.core.publisher.Mono;
 public class HealthFinderService {
     private final WebClient webClient;
 
-  /*  @Value("${myhealthfinder.api.base-url}")
-    private String baseUrl;*/
+    @Value("${myhealthfinder.api.base-url}")
+    private String baseUrl;
 
-    /*@Value("${spring.codec.max-in-memory-size}")
-    private int maxInMemorySize;*/
+    @Value("${spring.codec.max-in-memory-size}")
+    private int maxInMemorySize;
 
     public HealthFinderService() {
         // Increase the buffer size

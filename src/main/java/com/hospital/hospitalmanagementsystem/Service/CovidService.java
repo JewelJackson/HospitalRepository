@@ -4,13 +4,20 @@ import com.hospital.hospitalmanagementsystem.Handler.InvalidLocationException;
 import com.hospital.hospitalmanagementsystem.Response.CovidContactResponse;
 import com.hospital.hospitalmanagementsystem.Response.CovidDataResponse;
 import com.hospital.hospitalmanagementsystem.Response.CovidHospitalBedResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-
 @Service
 public class CovidService {
+
+    /*@Value("${covidservice.api.base-url}")
+    private String baseUrl;*/
 
     private final WebClient webClient;
 
@@ -25,7 +32,7 @@ public class CovidService {
      * @param loc
      * @return
      */
-    public Mono<CovidDataResponse.Data.RegionalData> fetchCovidDataByLocation(String loc) {
+    public Mono<CovidDataResponse.Data.RegionalData> getCovidDataByLocation(String loc) {
         return webClient
                 .get()
                 .uri("/stats/latest")
@@ -42,32 +49,11 @@ public class CovidService {
     }
 
     /**
-     * Covid-19 Bed Details
-     * @param state
-     * @return
-     */
-    public Mono<CovidHospitalBedResponse.Data.Regional> fetchCovidBedDataByState(String state) {
-        return webClient
-                .get()
-                .uri("/hospitals/beds")
-                .retrieve()
-                .bodyToMono(CovidHospitalBedResponse.class)
-                .flatMap(bedData -> filterDataByState(bedData, state))
-                .switchIfEmpty(Mono.error(new InvalidLocationException("State not present")));
-    }
-
-    private Mono<CovidHospitalBedResponse.Data.Regional> filterDataByState(CovidHospitalBedResponse bedResponse, String state) {
-        return Mono.justOrEmpty(bedResponse.getData().getRegional().stream()
-                .filter(bed -> bed.getState().equalsIgnoreCase(state))
-                .findFirst());
-    }
-
-    /**
      * Covid-19 Helpline Numbers
      * @param loc
      * @return
      */
-    public Mono<CovidContactResponse.Data.Contacts.Regional> fetchCovidContactHelpline(String loc){
+    public Mono<CovidContactResponse.Data.Contacts.Regional> getCovidContactHelpline(String loc){
         return webClient
                 .get()
                 .uri("/contacts")
@@ -80,6 +66,28 @@ public class CovidService {
     private Mono<CovidContactResponse.Data.Contacts.Regional> filterContactByLocation(CovidContactResponse contactResponse, String loc){
         return Mono.justOrEmpty(contactResponse.getData().getContacts().getRegional().stream()
                 .filter(contact -> contact.getLoc().equalsIgnoreCase(loc))
+                .findFirst());
+    }
+
+
+    /**
+     * Covid-19 Bed Details
+     * @param state
+     * @return
+     */
+    public Mono<CovidHospitalBedResponse.Data.Regional> getCovidBedDataByState(String state) {
+        return webClient
+                .get()
+                .uri("/hospitals/beds")
+                .retrieve()
+                .bodyToMono(CovidHospitalBedResponse.class)
+                .flatMap(bedData -> filterDataByState(bedData, state))
+                .switchIfEmpty(Mono.error(new InvalidLocationException("State not present")));
+    }
+
+    private Mono<CovidHospitalBedResponse.Data.Regional> filterDataByState(CovidHospitalBedResponse bedResponse, String state) {
+        return Mono.justOrEmpty(bedResponse.getData().getRegional().stream()
+                .filter(bed -> bed.getState().equalsIgnoreCase(state))
                 .findFirst());
     }
 }

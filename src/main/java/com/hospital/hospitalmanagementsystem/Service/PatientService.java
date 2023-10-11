@@ -26,7 +26,7 @@ public class PatientService {
 
         Patient patient = patientRepository.findByPhone(patientRequest.getPhone());
         if(patient==null){
-            throw new InvalidException("The User has not registered yet.");
+            throw new InvalidException("Invalid phone number or the User has not registered yet.");
         }
         PatientResponse patientResponse= new PatientResponse();
 
